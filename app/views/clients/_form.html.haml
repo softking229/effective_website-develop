@@ -1,0 +1,9 @@
+= tabs do
+  = tab 'Demographics' do
+    = render 'form_client', client: client, namespace: nil
+
+  - if client.persisted?
+    = tab 'Users' do
+      = render 'mates/roles'
+      %p Click New to invite a user.
+      = render_datatable(MatesDatatable.new(client_id: client.id), inline: true)

@@ -1,0 +1,21 @@
+.jumbotron
+  = effective_region :home_jumbotron do
+    %h1.display-4 Example Website
+    %p.lead This is a very effective start to a website ;)
+    %hr.my-4
+    %p.lead= link_to 'Learn More', '/about', class: 'btn btn-primary btn-lg'
+
+= effective_region :home_top do
+  %p Welcome to this example website! You're about to do something really productive, aren't you?
+
+.row
+  .col
+    = effective_region :home_left do
+      %p The :home_left effective_region
+
+  .col
+    = effective_region :home_right do
+      %p The :home_right effective_region
+
+= effective_region :home_bottom do
+  %p The :home_bottom effective_region

@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  host: localhost
+  database: example
+
+test:
+  adapter: postgresql
+  host: localhost
+  database: example_test

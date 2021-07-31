@@ -1,0 +1,21 @@
+.row.justify-content-center
+  .col-12.col-md-8.col-lg-6
+    .card
+      .card-body
+        %h5.card-title= @page_title
+
+        = render 'devise/shared/omniauth', resource_action: 'Sign In'
+
+        - if Rails.env.production?
+          %p Login as: <strong>admin@codeandeffect.com</strong> with password <strong>example</strong>.
+        - else
+          %p Login as: <strong>admin@codeandeffect.com</strong> with any password.
+
+        = effective_form_with(model: resource, url: session_path(resource_name)) do |f|
+          = f.email_field :email, required: true, autofocus: true
+          = f.password_field :password, required: true
+          = f.check_box :remember_me if devise_mapping.rememberable?
+
+          = f.submit 'Sign in'
+
+        = render 'devise/shared/links'

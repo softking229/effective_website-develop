@@ -1,0 +1,14 @@
+%h1= @page_title
+
+%p Accept your invitation to create a user account on this website.
+
+= effective_form_with(model: resource, url: invitation_path(resource_name), html: { method: :put }) do |f|
+  = f.hidden_field :invitation_token
+
+  .row
+    .col-6
+      = render 'users/sign_up_fields', f: f
+    .col-6
+      = render 'users/mates', user: f.object
+
+  = f.submit 'Accept Invitation'

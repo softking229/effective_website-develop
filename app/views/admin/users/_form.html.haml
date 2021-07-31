@@ -1,0 +1,11 @@
+= tabs do
+  = tab 'Demographics' do
+    = render '/admin/users/form_user', user: user, namespace: :admin
+
+  - if user.persisted?
+    = tab 'Clients' do
+      = render 'mates/roles'
+      = render_datatable(MatesDatatable.new(user_id: user.id), inline: true)
+
+    = tab 'Logs' do
+      = render_datatable(EffectiveLogsDatatable.new(for: user.id))

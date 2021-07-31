@@ -1,0 +1,33 @@
+%nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  = link_to(image_pack_tag('logo-admin.png', alt: 'Admin Logo'), '/admin', class: 'navbar-brand')
+
+  %button.navbar-toggler{type: 'button', data: {toggle: 'collapse', target: '#navContent', 'aria-controls': 'navContent', 'aria-label': 'Toggle navigation'}}
+    %span.navbar-toggler-icon
+
+  #navContent.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto
+      - if can? :index, User
+        = nav_link_to 'Users', admin_users_path
+
+      - if can? :index, Client
+        = nav_link_to 'Clients', admin_clients_path
+
+      - if can? :admin, :effective_orders
+        = nav_link_to 'Orders', effective_orders.admin_orders_path
+
+      - if can? :admin, :effective_pages
+        = nav_link_to 'Pages', effective_pages.admin_pages_path
+
+      - if can? :admin, :effective_posts
+        = nav_link_to 'Posts', effective_posts.admin_posts_path
+
+      - if can? :admin, :effective_logging
+        = nav_link_to 'Logs', effective_logging.admin_logs_path
+
+    %ul.navbar-nav
+      %li.nav-item= link_to 'View Site', root_path, class: 'nav-link'
+
+      = nav_dropdown(user_tag(current_user), right: true) do
+        = nav_link_to 'Settings', user_settings_path
+        = nav_divider
+        = nav_link_to 'Sign Out', destroy_user_session_path, method: :delete

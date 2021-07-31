@@ -1,0 +1,34 @@
+%nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  = link_to(image_pack_tag('logo.png', alt: 'Logo'), '/', class: 'navbar-brand')
+
+  %button.navbar-toggler{type: 'button', data: {toggle: 'collapse', target: '#navContent', 'aria-controls': 'navContent', 'aria-label': 'Toggle navigation'}}
+    %span.navbar-toggler-icon
+
+  #navContent.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto
+      - if can?(:index, Effective::Post)
+        = nav_link_to 'Blog', effective_posts.posts_path
+
+      - if can?(:index, Effective::Page)
+        - Effective::Page.all.each do |page|
+          = nav_link_to(page, effective_pages.page_path(page)) if can?(:show, page)
+
+      - if can?(:index, Client) && current_user.clients.present?
+        = nav_link_to 'Manage Users', clients_path
+
+      - if can?(:index, Effective::StyleGuide)
+        = nav_link_to 'Style Guide', effective_style_guide.style_guide_path
+
+    %ul.navbar-nav
+      - if current_user.present?
+        = nav_dropdown(user_tag(current_user), right: true) do
+          = nav_link_to 'Settings', user_settings_path
+
+          - if can?(:access, :admin)
+            = nav_divider
+            = nav_link_to 'Site Admin', '/admin'
+
+          = nav_divider
+          = nav_link_to 'Sign Out', destroy_user_session_path, method: :delete
+      - else
+        = nav_link_to 'Sign In', new_user_session_path
